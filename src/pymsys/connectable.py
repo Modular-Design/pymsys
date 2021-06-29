@@ -1,6 +1,7 @@
 from typing import Optional
 from .interfaces import ISerializer
 from .helpers import includes
+from .metadata import Metadata
 
 
 class Connectable(ISerializer):
@@ -15,9 +16,8 @@ class Connectable(ISerializer):
             import uuid
             id = str(uuid.uuid4())
         self.id = id
-        self.name = name
+        self.meta = Metadata(name, description)
         self.data = default_value
-        self.description = description
         self.removable = removable
 
     def to_json(self) -> dict:
@@ -27,11 +27,8 @@ class Connectable(ISerializer):
         res["removable"] = self.removable
         res["data"] = self.data
 
-        if self.name:
-            res["name"] = self.name
+        res["meta"] = self.meta.to_json()
 
-        if self.description:
-            res["description"] = self.description
         return res
 
     def load(self, json: dict) -> bool:
