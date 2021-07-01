@@ -10,7 +10,7 @@ class Metadata(ISerializer):
         self.name = name
         self.description = description
 
-    def to_json(self) -> dict:
+    def to_dict(self) -> dict:
         res = dict()
         if self.name:
             res["name"] = self.name

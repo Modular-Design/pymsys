@@ -1,21 +1,30 @@
-from ..module import *
-from ..option import *
-from ..connectable import Connectable
+import click
+import uvicorn
 from ..server import Server
+from ..example import ExampleModule
+
+app = Server(ExampleModule)
 
 
-class TestModule(Module):
-    def __init__(self):
-        super().__init__(name="Test",
-                         description="This is a Testmodule",
-                         inputs=[Connectable(), Connectable(), Connectable()],
-                         outputs=[Connectable(), Connectable(), Connectable()],
-                         options=[Option(), Option(), Option()],
-                         removable_inputs=True,
-                         removable_outputs=True)
-
-    def update(self) -> bool:
-        pass
+def launch(module="pymsys.scripts:app", host="127.0.0.1", port=9000):
+    uvicorn.run(module, host=host, port=port, log_level="info", reload=True)
 
 
-app = Server(TestModule)
+@click.group(chain=True, invoke_without_command=True)
+@click.pass_context
+def pymsys(ctx):
+    if ctx.invoked_subcommand is None:
+        launch()
+
+
+@pymsys.command("serve")
+@click.option('-m', '--module', default="msys.scripts.msys:server", help='The module to host.')
+@click.option('-h', '--host', default="127.0.0.1", help='The host address.', type=str)
+@click.option('-p', '--port', default=8000, help='The port address.', type=int)
+def serve(module, host, port):
+    """launches costom server"""
+    launch(module, host, port)
+
+
+if __name__ == '__main__':
+    pymsys()

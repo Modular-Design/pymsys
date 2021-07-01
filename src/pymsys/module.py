@@ -23,29 +23,28 @@ class Module(ISerializer, ABC):
         self.options = options
         self.removable_inputs = removable_inputs
         self.removable_outputs = removable_outputs
-        self.title = name
         self.meta = Metadata(name, description)
         self.ram_reserve = ram_reserve  # mb
 
-    def to_json(self) -> dict:
+    def to_dict(self) -> dict:
         res = dict()
         res["ram"] = self.ram_reserve
-        res["meta"] = self.meta.to_json()
-
-        if self.inputs:
-            res["inputs"] = {"size": len(self.inputs), "removable": self.removable_inputs, "elements": []}
-            for inp in self.inputs:
-                res["inputs"]["elements"].append(inp.to_json())
-
-        if self.outputs:
-            res["outputs"] = {"size": len(self.outputs), "removable": self.removable_outputs, "elements": []}
-            for out in self.outputs:
-                res["outputs"]["elements"].append(out.to_json())
+        res["meta"] = self.meta.to_dict()
 
         if self.options:
             res["options"] = {"size": len(self.options), "addable": False, "elements": []}
             for opt in self.options:
-                res["options"]["elements"].append(opt.to_json())
+                res["options"]["elements"].append(opt.to_dict())
+
+        if self.inputs:
+            res["inputs"] = {"size": len(self.inputs), "removable": self.removable_inputs, "elements": []}
+            for inp in self.inputs:
+                res["inputs"]["elements"].append(inp.to_dict())
+
+        if self.outputs:
+            res["outputs"] = {"size": len(self.outputs), "removable": self.removable_outputs, "elements": []}
+            for out in self.outputs:
+                res["outputs"]["elements"].append(out.to_dict())
 
         return res
 

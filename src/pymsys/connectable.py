@@ -20,14 +20,14 @@ class Connectable(ISerializer):
         self.data = default_value
         self.removable = removable
 
-    def to_json(self) -> dict:
+    def to_dict(self) -> dict:
         res = dict()
 
         res["id"] = self.id
         res["removable"] = self.removable
         res["data"] = self.data
 
-        res["meta"] = self.meta.to_json()
+        res["meta"] = self.meta.to_dict()
 
         return res
 

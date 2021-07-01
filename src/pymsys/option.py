@@ -28,7 +28,7 @@ class Option(ISerializer):
         else:
             self.value = []
 
-    def to_json(self) -> dict:
+    def to_dict(self) -> dict:
         res = dict()
         if self.id:
             res["id"] = self.id
