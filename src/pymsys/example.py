@@ -2,7 +2,6 @@ from .module import *
 from .option import *
 from .connectable import Connectable
 
-
 class ExampleModule(Module):
     def __init__(self):
         super().__init__(name="ExampleModule",
@@ -31,7 +30,7 @@ class ExampleModule(Module):
                          options=[Option(id="insert",
                                          title="Insert",
                                          description="Insert something!",
-                                         default_value="something",
+                                         default_value=["something"],
                                          ),
                                   Option(id="choose_one",
                                          title="Choose One",
