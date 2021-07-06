@@ -1,6 +1,8 @@
 from .module import *
 from .option import *
 from .connectable import Connectable
+from .server import Server
+
 
 class ExampleModule(Module):
     def __init__(self):
@@ -48,3 +50,6 @@ class ExampleModule(Module):
     def update(self) -> bool:
         for i in range(3):
             self.outputs[i].load(self.inputs[i].to_dict())
+
+
+example = Server(ExampleModule)
