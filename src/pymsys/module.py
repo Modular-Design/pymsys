@@ -31,18 +31,18 @@ class Module(ISerializer, ABC):
         res["ram"] = self.ram_reserve
         res["meta"] = self.meta.to_dict()
 
+        res["options"] = {"size": len(self.options), "removable": False, "elements": []}
         if self.options:
-            res["options"] = {"size": len(self.options), "addable": False, "elements": []}
             for opt in self.options:
                 res["options"]["elements"].append(opt.to_dict())
 
+        res["inputs"] = {"size": len(self.inputs), "removable": self.removable_inputs, "elements": []}
         if self.inputs:
-            res["inputs"] = {"size": len(self.inputs), "removable": self.removable_inputs, "elements": []}
             for inp in self.inputs:
                 res["inputs"]["elements"].append(inp.to_dict())
 
+        res["outputs"] = {"size": len(self.outputs), "removable": self.removable_outputs, "elements": []}
         if self.outputs:
-            res["outputs"] = {"size": len(self.outputs), "removable": self.removable_outputs, "elements": []}
             for out in self.outputs:
                 res["outputs"]["elements"].append(out.to_dict())
 
