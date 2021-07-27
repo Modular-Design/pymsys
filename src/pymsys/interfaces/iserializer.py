@@ -7,6 +7,6 @@ class ISerializer(ABC):
         pass
 
     @abstractmethod
-    def load(self, json: dict) -> bool:
+    def load(self, config: dict) -> bool:
         pass
 

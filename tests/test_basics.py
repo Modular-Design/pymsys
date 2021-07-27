@@ -1,8 +1,8 @@
 from fastapi.testclient import TestClient
-from src.pymsys import ExampleModule, Server
+from src.pymsys import ExampleNode, Server
 
 
-app = Server(ExampleModule)
+app = Server(ExampleNode)
 
 client = TestClient(app)
 
@@ -15,14 +15,14 @@ def test_get_config():
 
 def test_configure():
     response = client.post("/config",
-                           json={"id": "test"},)
+                           json={},)
     assert response.status_code == 200
     assert response.json() != {}
 
 
 def test_update():
     response = client.put("/update",
-                          json={"id": "foobar"},)
+                          json={},)
     assert response.status_code == 200
     assert response.json() != {}
 

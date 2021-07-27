@@ -1,9 +1,9 @@
 import click
 import uvicorn
 from ..server import Server
-from ..example import ExampleModule
+from ..nodes import ExampleNode
 
-app = Server(ExampleModule)
+app = Server(ExampleNode)
 
 
 def launch(module="pymsys.scripts:app", host="127.0.0.1", port=9000):

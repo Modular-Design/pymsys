@@ -1,37 +1,37 @@
-from typing import Optional, List
+from typing import Optional, List, Dict
 
-from .interfaces import ISerializer
-from .helpers import includes
+from ..interfaces import ILink
+from ..link import Link
+from ..helpers import includes
 
 
-class Option(ISerializer):
+class Option(Link):
     def __init__(self,
-                 id: Optional[str] = None,
+                 parent: Optional[ILink] = None,
                  title: Optional[str] = None,
                  default_value: Optional[List[str]] = None,
                  description: Optional[str] = "",
                  selection: Optional[List[str]] = None,
-                 single: Optional[bool] = True):
+                 single: Optional[bool] = True,
+                 influences: Optional[Dict[str, ILink]] = None):
 
-        if id is None:
-            import uuid
-            id = str(uuid.uuid4())
-        self.id = id
+        self.parent = parent
         self.title = title
         self.description = description
         self.selection = selection
         self.single = single
+        self.value = []
         if default_value:
             self.value = default_value
         elif selection:
             self.value = [self.selection[0]]
-        else:
-            self.value = []
+
+        if influences is None:
+            influences = []
+        self.influences = influences
 
     def to_dict(self) -> dict:
         res = dict()
-        if self.id:
-            res["id"] = self.id
         if self.title:
             res["title"] = self.title
         if self.value:
@@ -41,26 +41,20 @@ class Option(ISerializer):
         if self.selection:
             res["selection"] = self.selection
             res["single"] = self.single
-
         return res
 
-    def load(self, json: dict) -> bool:
-        if "id" not in json.keys():
-            return False
-        else:
-            if self.id is not json["id"]:
-                return False
-
+    def load(self, config: dict) -> bool:
         value = None
-        if "value" in json.keys():
-            value = json["value"]
+        if "value" in config.keys():
+            value = config["value"]
 
-        if includes(json.keys(), ["selection", "single"]):
-            self.selection = json["selection"]
-            self.single = json["single"]
+        if includes(config.keys(), ["selection", "single"]):
+            self.selection = config["selection"]
+            self.single = config["single"]
             if not includes(self.selection, value):
                 return False
             if len(value) != 1 and self.single:
                 return False
         self.value = value
         return True
+

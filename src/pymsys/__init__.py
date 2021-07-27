@@ -1,9 +1,8 @@
-from .connectable import Connectable
-from .example import ExampleModule
 from .metadata import Metadata
-from .module import Module
-from .option import Option
+from .connectables import *
+from .nodes import *
+from .options import *
 from .server import Server
 
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"

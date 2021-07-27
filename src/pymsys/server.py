@@ -15,8 +15,8 @@ class Server(FastAPI):
             self.default = node
 
         self.meta = self.default.meta
-        self.title = self.meta.name
-        self.description = self.meta.description
+        self.title = self.meta.get_name()
+        self.description = self.meta.get_description()
 
         @self.get("/config")
         async def get_configuration():
