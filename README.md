@@ -1,5 +1,5 @@
 [![pip](https://img.shields.io/pypi/v/pymsys.svg)](https://pypi.org/project/pymsys/)
-![workflow](https://github.com/Modular-Design/pymsys/actions/workflows/ci.yml/badge.svg?branch=master)
+[![workflow](https://github.com/Modular-Design/pymsys/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Modular-Design/pymsys/actions)
 [![codecov](https://codecov.io/gh/Modular-Design/pymsys/branch/main/graph/badge.svg?token=CG4DIOZZ6C)](https://codecov.io/gh/Modular-Design/pymsys)
 
 ````shell
