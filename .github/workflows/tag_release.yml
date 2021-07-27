@@ -1,4 +1,4 @@
-name: Tag Release
+name: Create Release by Tag
 on:
   push:
     # Sequence of patterns matched against refs/tags
