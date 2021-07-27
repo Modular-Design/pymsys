@@ -10,5 +10,6 @@ setup(
     ],
     extra_require={
         "pytest~=6.2.3",
+        "requests~=2.26.0",
     },
 )
