@@ -5,4 +5,4 @@ from .options import *
 from .server import Server
 
 
-__version__ = "0.0.2"
+__version__ = "0.0.3"
