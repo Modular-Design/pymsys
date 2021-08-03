@@ -11,9 +11,7 @@ def local_file(name):
 SOURCE = local_file("src")
 README = local_file("README.md")
 
-extras = {
-        "test": ["pytest~=6.2.3", 'requests~=2.26.0'],
-        },
+extras = {"test": ["pytest>=6.2.3", "requests>=2.26.0"]}
 
 setup(
     name="pymsys",
@@ -24,7 +22,7 @@ setup(
         "uvicorn~=0.13",
         "click~=7.0",
     ],
-    extra_require=extras,
+    extras_require=extras,
     long_description=open(README).read(),
-    long_description_content_type="text/md",
+    long_description_content_type="text/markdown",
 )
