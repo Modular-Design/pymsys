@@ -10,16 +10,16 @@ README = local_file("README.md")
 
 extras = {"test": ["pytest>=6.2.3", "requests>=2.26.0"]}
 
-# __version__ = None
-#
-# with open(local_file("src/pymsys/version.py")) as o:
-#     exec(o.read())
-#
-# assert __version__ is not None
+__version__ = None
+
+with open(local_file("src/pymsys/version.py")) as o:
+    exec(o.read())
+
+assert __version__ is not None
 
 setup(
     name="pymsys",
-    # version=__version__,
+    version=__version__,
     description="MSYS Library for Python.",
     install_requires=[
         "setuptools~=56.0",
