@@ -6,7 +6,7 @@ from ..metadata import Metadata
 from ..options import Option
 from ..interfaces import IGenerator, ILink, IMetadata
 from ..link import Link
-from ..child_list import ChildList
+from src.pymsys.lists.child_list import ChildList
 
 
 class Node(Link, ABC):
@@ -42,6 +42,18 @@ class Node(Link, ABC):
         res = super().to_dict()
         res["ram"] = self.ram_reserve
         return res
+
+    def get_meta(self) -> IMetadata:
+        return self.meta
+
+    def get_inputs(self) -> ChildList:
+        return self.inputs
+
+    def get_outputs(self) -> ChildList:
+        return self.outputs
+
+    def get_options(self) -> ChildList:
+        return self.options
 
     @abstractmethod
     def update(self):

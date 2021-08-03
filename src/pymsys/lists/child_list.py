@@ -1,6 +1,6 @@
-from .link import Link, ILink
-from typing import List, Optional, Dict
-from .interfaces import IGenerator
+from ..link import Link, ILink
+from typing import Optional, Dict
+from ..interfaces import IGenerator
 
 
 class ChildList(Link):
@@ -16,12 +16,17 @@ class ChildList(Link):
         if self.generator:
             self.generator.set_list(self)
 
-
     def set_editable(self, active: bool) -> bool:
         if not self.generator:
             return False
         self.editable = active
         return self.editable
+
+    def set_parent(self, parent: object) -> bool:
+        super().set_parent(parent)
+        for key, value in self.get_childs():
+            value.set_parent(self)
+        return True
 
     def to_dict(self) -> dict:
         res = {"size": len(self.childs),

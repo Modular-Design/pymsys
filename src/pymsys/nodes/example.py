@@ -6,7 +6,8 @@ from ..server import Server
 
 class ExampleNode(Node):
     def __init__(self):
-        super().__init__(meta= Metadata(name="ExampleModule", description="This is a example Module",),
+        super().__init__(meta=Metadata(name="ExampleModule",
+                                       description="This is a example Module",),
                          options={"insert": Option(
                                          title="Insert",
                                          description="Insert something!",
@@ -23,7 +24,8 @@ class ExampleNode(Node):
                                          selection=["1", "2", "3"],
                                          single=False)},
                          inputs={"blocked": Connectable(
-                             meta= Metadata(name="blocked",description="Insert something!",),
+                             meta=Metadata(name="blocked",
+                                           description="Insert something!",),
                              data={"value": 1},
                          )},
                          input_generator=CounterGenerator(class_obj=Connectable, initial_size=4),
