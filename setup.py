@@ -1,8 +1,6 @@
 from setuptools import setup
 import os
-import sys
-import warnings
-
+from src.pymsys import __version__
 
 def local_file(name):
     return os.path.relpath(os.path.join(os.path.dirname(__file__), name))
@@ -15,6 +13,7 @@ extras = {"test": ["pytest>=6.2.3", "requests>=2.26.0"]}
 
 setup(
     name="pymsys",
+    version=__version__,
     description="MSYS Library for Python.",
     install_requires=[
         "setuptools~=56.0",
