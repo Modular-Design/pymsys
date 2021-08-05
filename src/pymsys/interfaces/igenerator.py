@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Dict, Any
 from .ilink import ILink
 
 
@@ -13,7 +13,7 @@ class IGenerator(ABC):
         pass
 
     @abstractmethod
-    def generate(self, diff: int, new_key_list: List[str]):
+    def generate(self, diff: int, new_config: Dict[str, Any]):
         pass
 
     @abstractmethod

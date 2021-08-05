@@ -26,12 +26,12 @@ class ExampleNode(Node):
                          inputs={"blocked": Connectable(
                              meta=Metadata(name="blocked",
                                            description="Insert something!",),
-                             data={"value": 1},
+                             data=1,
                          )},
-                         input_generator=CounterGenerator(class_obj=Connectable, initial_size=4),
-                         output_generator=CounterGenerator(class_obj=Connectable, initial_size=3))
+                         input_generator=CounterGenerator(default_class=Connectable, initial_size=4, default_config={"data":{"value": 1}}),
+                         output_generator=CounterGenerator(default_class=Connectable, initial_size=3, default_config={"data":{"value": 1}}))
 
-    def update(self) -> bool:
+    def process(self, input_changed: bool) -> bool:
         for i in range(3):
             self.outputs[str(i)].load(self.inputs[str(i)].to_dict())
         return True

@@ -5,10 +5,10 @@ from ..interfaces import IGenerator
 
 class ChildList(Link):
     def __init__(self,
-                 parent: Optional[ILink] = None,
                  childs: Optional[Dict[str, ILink]] = None,
-                 key_generator: Optional[IGenerator] = None,):
-        super().__init__(parent, childs)
+                 key_generator: Optional[IGenerator] = None,
+                 parent: Optional[ILink] = None,):
+        super().__init__(parent=parent, childs=childs)
         self.generator = key_generator
 
         self.editable = bool(key_generator)
@@ -21,12 +21,6 @@ class ChildList(Link):
             return False
         self.editable = active
         return self.editable
-
-    def set_parent(self, parent: object) -> bool:
-        super().set_parent(parent)
-        for key, value in self.get_childs():
-            value.set_parent(self)
-        return True
 
     def to_dict(self) -> dict:
         res = {"size": len(self.childs),
@@ -43,18 +37,15 @@ class ChildList(Link):
             raise ValueError
         else:
             if self.editable:
-                self.generator.generate(diff)
+                self.generator.generate(diff, list(config["elements"].keys()))
 
         super().load(config["elements"])
-        print(self)
-        print(self.to_dict())
         return True
 
     def __setitem__(self, elemno, elem):
         self.childs[elemno] = elem
 
     def __getitem__(self, elemno):
-        print(self.childs.keys())
         return self.childs[elemno]
 
     def __len__(self):

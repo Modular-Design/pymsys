@@ -1,24 +1,17 @@
 from abc import abstractmethod
 from typing import List
-from .iserializer import ISerializer
 from .ilink import ILink
+from .isetable import ISetable
+from .imeta import IMeta
 
 
-class IConnectable(ISerializer, ILink):
-    @abstractmethod
-    def get_data(self) -> dict:
-        pass
-
-    @abstractmethod
-    def set_data(self, data) -> bool:
-        pass
-
+class IConnectable(ILink, ISetable, IMeta):
     @abstractmethod
     def get_output(self) -> "IConnectable":
         pass
 
     @abstractmethod
-    def set_ingoing(self, connection: "Connection"):
+    def set_ingoing(self, connection: "IConnection"):
         pass
 
     @abstractmethod
@@ -38,7 +31,7 @@ class IConnectable(ISerializer, ILink):
         pass
 
     @abstractmethod
-    def is_data_valid(self, data: dict):
+    def is_allowed(self, config: dict) -> bool:
         pass
 
     @abstractmethod

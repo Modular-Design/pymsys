@@ -1,12 +1,11 @@
 from abc import abstractmethod
-from .iserializer import ISerializer
+from .ilink import ILink
 from .iupdatable import IUpdatable
+from .iconnectable import IConnectable
+from .isetable import ISetable
 
 
-class IValue(ISerializer, IUpdatable):
-    @abstractmethod
-    def set_connectable(self, connectable: "Connectable") -> bool:
-        pass
+class IValue(ILink, IUpdatable, ISetable):
 
     @abstractmethod
     def is_allowed(self, config: dict) -> bool:

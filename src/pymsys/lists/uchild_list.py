@@ -1,14 +1,16 @@
-from ..link import Link, ILink
+from ..link import ILink
 from typing import Optional, Dict, List, Union
 from ..interfaces import IGenerator, IUpdatable
+from .child_list import ChildList
 
 
-class UpdatableChildList(Link, IUpdatable):
+class UpdatableChildList(ChildList, IUpdatable):
     def __init__(self,
-                 parent: Optional[ILink] = None,
                  childs: Optional[Dict[str, Union[ILink, IUpdatable]]] = None,
-                 key_generator: Optional[IGenerator] = None,):
-        super().__init__(parent, childs, key_generator)
+                 key_generator: Optional[IGenerator] = None,
+                 parent: Optional[ILink] = None,
+                 ):
+        super().__init__(childs=childs, key_generator=key_generator, parent=parent)
 
     def update(self) -> List[int]:
         res = []

@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import List, Optional, Union
 from .iserializer import ISerializer
 
 
 class ILink(ISerializer):
     @abstractmethod
-    def set_parent(self, parent: "ILink") -> bool:
+    def set_parent(self, parent: "ILink", key: Optional[str] = None) -> bool:
         pass
 
     @abstractmethod
@@ -25,9 +25,9 @@ class ILink(ISerializer):
         pass
 
     @abstractmethod
-    def get_key_from_parent(self) -> str:
+    def get_key_from_parent(self) -> Union[str, None]:
         pass
 
     @abstractmethod
-    def get_key_from_child(self, child: "ILink", depth: Optional[int] = 0) -> str:
+    def get_key_from_child(self, child: "ILink", depth: Optional[int] = 0) -> Union[List[str], None]:
         pass

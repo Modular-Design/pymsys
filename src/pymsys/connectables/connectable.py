@@ -1,5 +1,5 @@
 import weakref
-from typing import Optional, List
+from typing import Optional, List, Union, Type
 from ..link import Link, ILink
 
 from ..metadata import Metadata
@@ -12,40 +12,34 @@ CONNECTABLE_FLAGS = {"inputs", "outputs"}
 
 class Connectable(Link, IConnectable):
     def __init__(self,
-                 parent: Optional[ILink] = None,
                  meta: Optional[IMetadata] = None,
-                 data: Optional[IValue] = None,):
+                 data: Optional[Union[IValue, dict, float, str]] = None,
+                 parent: Optional[ILink] = None,
+                 default_value_class: Optional[Type[IValue]] = Value,
+                 ):
 
         self.parent = parent
         if meta is None:
             meta = Metadata()
         self.meta = meta
         if data is None:
-            data = Value()
+            data = default_value_class()
         if not isinstance(data, IValue):
-            data = Value(data)
+            data = default_value_class(data)
         self.data = data
-        self.data.set_connectable(self)
 
         self.in_ref = None
         self.out_refs = []
-        self.flag = None
 
-        super().__init__(parent, {"meta": self.meta,
-                                  "data": self.data})
+        super().__init__(childs={"meta": self.meta,
+                                    "data": self.data},
+                         parent=parent)
 
     def get_data(self):
         return self.data
 
     def set_data(self, data) -> bool:
-        if self.data.is_allowed(data):
-            self.data = data
-        return False
-
-    def set_parent(self, parent):
-        super().set_parent(parent)
-        self.flag = self.get_parent().get_key_from_parent()
-        return True
+        return self.data.set_data(data)
 
     def get_local(self) -> str:
         if self.flag is None:
@@ -75,6 +69,9 @@ class Connectable(Link, IConnectable):
             if input:
                 res.append(input)
         return res
+
+    def get_meta(self) -> IMetadata:
+        return self.meta
 
     def get_data(self):
         output = self.get_output()
@@ -125,6 +122,9 @@ class Connectable(Link, IConnectable):
             conn_ref = self.out_refs[i]
             if conn_ref() is connection:
                 del self.out_refs[i]
+
+    def is_allowed(self, config: dict) -> bool:
+        return self.data.is_allowed(config)
 
     def is_connected(self) -> bool:
         if self.flag == "inputs":

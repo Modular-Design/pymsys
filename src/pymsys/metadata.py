@@ -1,9 +1,9 @@
 from typing import Optional
 
-from .interfaces import ISerializer
+from .interfaces import IMetadata
 
 
-class Metadata(ISerializer):
+class Metadata(IMetadata):
     def __init__(self,
                  name: Optional[str] = None,
                  description: Optional[str] = None,
