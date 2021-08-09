@@ -1,4 +1,4 @@
-from ..interfaces import IValue
+from ..interfaces import IValue, IConnectable
 from ..helpers import includes
 from typing import Optional, List, Union, Any
 from ..helpers import encrypt
@@ -8,7 +8,7 @@ from ..link import Link
 class Value(Link, IValue):
     def __init__(self,
                  default_data: Optional[Union[dict, float, int, str]] = None,
-                 parent: Optional["Connectable"] = None,):
+                 parent: Optional["IConnectable"] = None,):
         if default_data is None:
             default_data = dict()
         elif isinstance(default_data, float) or isinstance(default_data, int):
@@ -19,7 +19,6 @@ class Value(Link, IValue):
         self.last_hash = encrypt(default_data)
         self.default_data = default_data
         super().__init__(default_data, parent)
-
 
     def load(self, config: dict) -> bool:
         if not self.is_allowed(config):

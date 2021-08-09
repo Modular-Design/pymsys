@@ -1,10 +1,12 @@
-from __future__ import annotations
-
 from abc import abstractmethod
 from typing import List
 from .ilink import ILink
 from .isetable import ISetable
 from .imeta import IMeta
+
+
+class IConnection:
+    pass
 
 
 class IConnectable(ILink, ISetable, IMeta):
