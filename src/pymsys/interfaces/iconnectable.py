@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from abc import abstractmethod
 from typing import List
 from .ilink import ILink
@@ -19,15 +21,15 @@ class IConnectable(ILink, ISetable, IMeta):
         pass
 
     @abstractmethod
-    def set_outgoing(self, connections: List["Connection"]) -> None:
+    def set_outgoing(self, connections: List["IConnection"]) -> None:
         pass
 
     @abstractmethod
-    def add_outgoing(self, connection: "Connection") -> None:
+    def add_outgoing(self, connection: "IConnection") -> None:
         pass
 
     @abstractmethod
-    def remove_outgoing(self, connection: "Connection") -> None:
+    def remove_outgoing(self, connection: "IConnection") -> None:
         pass
 
     @abstractmethod

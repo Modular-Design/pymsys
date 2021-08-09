@@ -1,11 +1,12 @@
 from typing import Optional, List, Dict
 
-from ..interfaces import ILink, IMetadata
+from ..interfaces import ILink, IMetadata, IOption
 from ..link import Link
 from ..helpers import includes
 from ..metadata import Metadata
 
-class Option(Link):
+
+class Option(Link, IOption):
     def __init__(self,
                  title: Optional[str] = None,
                  default_value: Optional[List[str]] = None,
@@ -44,7 +45,7 @@ class Option(Link):
                 self.childs["value"] = self.value
                 return False
             if len(value) != 1 and self.single:
-                self.childs["value"] = self.vvalue
+                self.childs["value"] = self.value
                 return False
         return True
 

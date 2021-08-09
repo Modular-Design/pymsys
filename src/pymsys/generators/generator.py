@@ -92,6 +92,7 @@ class Generator(IGenerator):
 
     def remove_child(self, key: Optional[str] = None):
         if key is None:
+            old_keys = list(self.parent.get_childs().keys())
             self.parent.get_childs().pop(old_keys[-1])
         else:
             self.parent.get_childs().pop(key)

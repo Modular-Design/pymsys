@@ -9,6 +9,7 @@ from .ivalue import IValue
 from .imeta import IMeta
 
 from .ilink import ILink
+from .ioption import IOption
 
 from .iconnectable import IConnectable
 from .inode import INode

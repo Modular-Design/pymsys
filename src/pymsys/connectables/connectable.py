@@ -4,8 +4,7 @@ from ..link import Link, ILink
 
 from ..metadata import Metadata
 from ..values import Value
-from ..interfaces import IValue, IMetadata, IConnectable
-
+from ..interfaces import IValue, IMetadata, IConnectable, IConnection
 
 CONNECTABLE_FLAGS = {"inputs", "outputs"}
 
@@ -32,7 +31,7 @@ class Connectable(Link, IConnectable):
         self.out_refs = []
 
         super().__init__(childs={"meta": self.meta,
-                                    "data": self.data},
+                                 "data": self.data},
                          parent=parent)
 
     def get_data(self):
@@ -89,14 +88,14 @@ class Connectable(Link, IConnectable):
     def is_connectable(self, output: IConnectable) -> bool:
         return self.get_data().is_allowed(output.get_data())
 
-    def set_ingoing(self, connection: "Connection"):
+    def set_ingoing(self, connection: "IConnection"):
         if self.in_ref:
             conn = self.in_ref()
             if conn is not connection:
                 conn.disconnect()
         self.in_ref = weakref.ref(connection)
 
-    def set_outgoing(self, connections: List["Connection"]):
+    def set_outgoing(self, connections: List["IConnection"]):
         for i in range(len(self.out_refs)):
             conn = self.out_refs[i]()
             if conn not in connections:
@@ -106,7 +105,7 @@ class Connectable(Link, IConnectable):
         for conn in connections:
             self.add_outgoing(conn)
 
-    def add_outgoing(self, connection: "Connection"):
+    def add_outgoing(self, connection: "IConnection"):
         found = False
         for i in range(len(self.out_refs)):
             conn_ref = self.out_refs[i]
@@ -117,7 +116,7 @@ class Connectable(Link, IConnectable):
         if not found:
             self.outgoing.append(weakref.ref(connection))
 
-    def remove_outgoing(self, connection: "Connection"):
+    def remove_outgoing(self, connection: "IConnection"):
         for i in range(len(self.out_refs)):
             conn_ref = self.out_refs[i]
             if conn_ref() is connection:
