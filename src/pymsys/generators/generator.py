@@ -53,7 +53,8 @@ class Generator(IGenerator):
 
         if diff > 0:
             if len(added_keys) != diff:
-                self.generate_child()
+                for i in range(diff):
+                    self.generate_child()
             else:
                 for i in range(diff):
                     key = added_keys[i]
@@ -70,7 +71,6 @@ class Generator(IGenerator):
                     self.remove_child(key)
 
         self.sort()
-
 
     def generate_child(self, key:Optional[str] = None, config:Optional[dict] = None):
         if config is None:

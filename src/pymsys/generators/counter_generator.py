@@ -1,6 +1,7 @@
 from .generator import Generator
 from typing import Optional
 
+
 class CounterGenerator(Generator):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

@@ -32,6 +32,8 @@ class ExampleNode(Node):
                          output_generator=CounterGenerator(default_class=Connectable, initial_size=3, default_config={"data":{"value": 1}}))
 
     def process(self, input_changed: bool) -> bool:
+        print(self.inputs.childs.keys())
+        print(self.outputs.childs.keys())
         for i in range(3):
             self.outputs[str(i)].load(self.inputs[str(i)].to_dict())
         return True

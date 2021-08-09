@@ -37,7 +37,7 @@ class ChildList(Link):
             raise ValueError
         else:
             if self.editable:
-                self.generator.generate(diff, list(config["elements"].keys()))
+                self.generator.generate(diff, config["elements"])
 
         super().load(config["elements"])
         return True
