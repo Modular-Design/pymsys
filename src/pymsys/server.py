@@ -18,12 +18,12 @@ class Server(FastAPI):
         self.title = self.meta.get_name()
         self.description = self.meta.get_description()
 
-        @self.get("/config")
-        async def get_configuration():
+        @self.get("/get")
+        async def get_config():
             return self.default.to_dict()
 
-        @self.post("/config")
-        async def configure(
+        @self.post("/change")
+        async def change_config(
                 body=Body(
                     ...,
                 )):
@@ -35,7 +35,7 @@ class Server(FastAPI):
             return instance.to_dict()
 
         @self.put("/update")
-        async def update(
+        async def update_config(
                 body=Body(...)
         ):
             instance = self.node_class()
